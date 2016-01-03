@@ -31,14 +31,6 @@ public class GameController : MonoBehaviour {
 	
 	Vector2[,] StarPosistion;
 
-	//Change scence
-	public void ChangeScene(int sceneToChangeTo)
-	{
-		float fadeTime = GameObject.Find("GameController").GetComponent<Fade>().BeginFade(1);
-		new WaitForSeconds(fadeTime);
-		Application.LoadLevel(sceneToChangeTo);
-	}
-	
 	// Use this for initialization
 	void Start () {
 		Star = ListStars [0];
@@ -88,6 +80,12 @@ public class GameController : MonoBehaviour {
 			CurrentStar.isStar = true;
 			CurrentStar.isActive = true;
 			ActivatedStars++;
+			print ("CorrectStars : " + ListCorrectStars [Stage].Count + " Activated Stars : " + ActivatedStars);
+		}
+
+		if (ListCorrectStars [Stage].Count == ActivatedStars) {
+			Application.LoadLevel(1);
+			print ("Change!!!");
 		}
 	}
 	
