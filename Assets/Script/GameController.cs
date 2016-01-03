@@ -20,8 +20,17 @@ public class GameController : MonoBehaviour {
 	int stage;
 	Vector2[,] starposition;
 
-	// Use this for initialization
-	void Start () {
+    //Change scence
+    public void ChangeScene(int sceneToChangeTo)
+    {
+        float fadeTime = GameObject.Find("GameController").GetComponent<Fade>().BeginFade(1);
+        new WaitForSeconds(fadeTime);
+        Application.LoadLevel(sceneToChangeTo);
+    }
+
+
+    // Use this for initialization
+    void Start () {
 		initStar = GameObject.Find ("InitStar");
 		firstStar = initStar.GetComponent<StarScript> ();
 		xrayInitStar = initStar.GetComponent<LineRenderer> ();
