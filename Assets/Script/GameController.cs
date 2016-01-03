@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour {
 
 		//Stage = PlayerPrefs.GetInt("Stage");
 		Stage = Application.loadedLevel - 2;
-		PlayerPrefs.SetInt("StageCleared", Stage - 1);
+		PlayerPrefs.SetInt("StageCleared", 1);
 		//CurrentStarsCount = ListStarsCount[Stage];
 
 		List<int> dummyCombination = new List<int> ();
