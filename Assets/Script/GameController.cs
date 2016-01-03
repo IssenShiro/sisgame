@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,8 +38,9 @@ public class GameController : MonoBehaviour {
 		LightCurrentStar = Star.GetComponent<LineRenderer> ();
 
 		//Stage = PlayerPrefs.GetInt("Stage");
-		Stage = 1;
-		CurrentStarsCount = ListStarsCount[Stage];
+		Stage = Application.loadedLevel - 2;
+		PlayerPrefs.SetInt("StageCleared", Stage - 1);
+		//CurrentStarsCount = ListStarsCount[Stage];
 
 		List<int> dummyCombination = new List<int> ();
 		dummyCombination.Add (0);
@@ -52,6 +53,27 @@ public class GameController : MonoBehaviour {
 		firstStage.Add (3);
 		firstStage.Add (4);
 		ListCorrectStars.Add (firstStage);
+
+		List<int> secondStage = new List<int> ();
+		secondStage.Add (0);
+		secondStage.Add (1);
+		secondStage.Add (2);
+		secondStage.Add (3);
+		secondStage.Add (5);
+		secondStage.Add (6);
+		secondStage.Add (4);
+		ListCorrectStars.Add (secondStage);
+
+		List<int> thirdStage = new List<int> ();
+		thirdStage.Add (0);
+		thirdStage.Add (1);
+		thirdStage.Add (2);
+		thirdStage.Add (3);
+		thirdStage.Add (6);
+		thirdStage.Add (7);
+		thirdStage.Add (4);
+		thirdStage.Add (5);
+		ListCorrectStars.Add (thirdStage);
 	}
 	
 	// Update is called once per frame
@@ -65,7 +87,7 @@ public class GameController : MonoBehaviour {
 				ClickPoint.z = 10;
 				EndPoint = ClickPoint;
 				LightCurrentStar.SetPosition(1, EndPoint);
-				print ("Location EndPoint x : " + EndPoint.x + " Location EndPoint y : " + EndPoint.y);
+				//print ("Location EndPoint x : " + EndPoint.x + " Location EndPoint y : " + EndPoint.y);
 				AddColliderToLine();
 			}
 		}
@@ -84,11 +106,12 @@ public class GameController : MonoBehaviour {
 		}
 
 		if (ListCorrectStars [Stage].Count == ActivatedStars) {
+			PlayerPrefs.SetInt("StageCleared", Stage);
+			print(Application.loadedLevel);
 			Application.LoadLevel(1);
-			print ("Change!!!");
 		}
 	}
-	
+
 	public void changeSprite(int StarId){
 		if (ListCorrectStars [Stage] [ActivatedStars] == StarId) {
 			if (ListStars [StarId].GetComponent<SpriteRenderer> ().sprite == ListSprites [0]) {
@@ -96,6 +119,45 @@ public class GameController : MonoBehaviour {
 			} else {
 				ListStars [StarId].GetComponent<SpriteRenderer> ().sprite = ListSprites [0];
 			}
+		}
+	}
+
+	public void ActivatePortal(int portalId) {
+		if (ListCorrectStars [Stage][ActivatedStars] == portalId) {
+			CurrentStar.isStar = false;
+			/*
+			Star = ListStars [portalId];
+			CurrentStar = ListStars [portalId].GetComponent<StarScript> ();
+			LightCurrentStar = ListStars [portalId].GetComponent<LineRenderer> (); */
+			CurrentStar.isStar = true;
+			CurrentStar.isActive = true;
+			ActivatedStars++;
+			print ("CorrectStars : " + ListCorrectStars [Stage].Count + " Activated Stars : " + ActivatedStars);
+		}
+		
+		if (ListCorrectStars [Stage].Count == ActivatedStars) {
+			PlayerPrefs.SetInt("StageCleared", Stage);
+			print(Application.loadedLevel);
+			Application.LoadLevel(1);
+		}
+	}
+
+	public void TeleportTo(int portalId) {
+		if (ListCorrectStars [Stage][ActivatedStars] == portalId) {
+			CurrentStar.isStar = false;
+			Star = ListStars [portalId];
+			CurrentStar = ListStars [portalId].GetComponent<StarScript> ();
+			LightCurrentStar = ListStars [portalId].GetComponent<LineRenderer> ();
+			CurrentStar.isStar = true;
+			CurrentStar.isActive = true;
+			ActivatedStars++;
+			print ("CorrectStars : " + ListCorrectStars [Stage].Count + " Activated Stars : " + ActivatedStars);
+		}
+		
+		if (ListCorrectStars [Stage].Count == ActivatedStars) {
+			PlayerPrefs.SetInt("StageCleared", Stage);
+			print(Application.loadedLevel);
+			Application.LoadLevel(1);
 		}
 	}
 	
