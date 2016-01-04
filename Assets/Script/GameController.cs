@@ -108,7 +108,13 @@ public class GameController : MonoBehaviour {
 		if (ListCorrectStars [Stage].Count == ActivatedStars) {
 			PlayerPrefs.SetInt("StageCleared", Stage);
 			print(Application.loadedLevel);
-			Application.LoadLevel(1);
+            if (Stage == 3)
+            {
+                Application.LoadLevel(6);
+            }
+            else {
+                Application.LoadLevel(1);
+            }
 		}
 	}
 
@@ -138,8 +144,14 @@ public class GameController : MonoBehaviour {
 		if (ListCorrectStars [Stage].Count == ActivatedStars) {
 			PlayerPrefs.SetInt("StageCleared", Stage);
 			print(Application.loadedLevel);
-			Application.LoadLevel(1);
-		}
+            if (Stage == 3)
+            {
+                Application.LoadLevel(6);
+            }
+            else {
+                Application.LoadLevel(1);
+            }
+        }
 	}
 
 	public void TeleportTo(int portalId) {
@@ -157,8 +169,14 @@ public class GameController : MonoBehaviour {
 		if (ListCorrectStars [Stage].Count == ActivatedStars) {
 			PlayerPrefs.SetInt("StageCleared", Stage);
 			print(Application.loadedLevel);
-			Application.LoadLevel(1);
-		}
+            if (Stage == 3)
+            {
+                Application.LoadLevel(6);
+            }
+            else {
+                Application.LoadLevel(1);
+            }
+        }
 	}
 	
 	public void OnCollisionEnter(Collision col)
